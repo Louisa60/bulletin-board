@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三年八班 溫馨班級佈告欄</title>
+    <!-- 引入 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        en: ['"Quicksand"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#faf6f0',   // 溫暖燕麥白
+                            100: '#f4ece1',  // 淺沙色
+                            200: '#e8dac6',  // 溫和奶茶色
+                            300: '#d7bf9d',  // 暖木色
+                            400: '#c5a073',  // 淺焦糖
+                            500: '#b0814c',  // 經典焦糖橘棕
+                            600: '#9b6b3b',  // 深焦糖
+                            700: '#7f542d',  // 濃縮咖啡棕
+                            800: '#634023',  // 深木褐
+                            900: '#472d18',  // 暗碳褐
+                        },
+                        accent: {
+                            rose: '#e8a7a1',  // 溫柔玫瑰粉
+                            sage: '#a7b8a8',  // 沉靜鼠尾草綠
+                            mustard: '#ebd07f' // 活力芥末黃
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #faf6f0;
+            background-image: radial-gradient(#e8dac6 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        /* 卡片柔和陰影 */
+        .card-shadow {
+            box-shadow: 0 10px 30px -5px rgba(127, 84, 45, 0.05),
+                        0 4px 12px -2px rgba(127, 84, 45, 0.03);
+        }
+        /* 自訂動態微光效果 */
+        @keyframes subtle-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+        .float-effect {
+            animation: subtle-float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="font-sans text-brand-900 min-h-screen flex flex-col selection:bg-brand-200">
+
+    <!-- 頂部導覽列 / 班級標題 -->
+    <header class="bg-white/85 backdrop-blur-md sticky top-0 z-40 border-b border-brand-100 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-graduation-cap text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-black text-brand-800 tracking-wide">三年八班溫馨聯絡網</h1>
+                    <p class="text-[10px] sm:text-xs text-brand-500 font-medium tracking-wider uppercase font-en">Class 308 Bulletin Board</p>
+                </div>
+            </div>
+            <!-- 右側即時動態 -->
+            <div class="text-right">
+                <span id="live-date" class="text-xs font-bold text-brand-600 block">載入中...</span>
+                <span id="greeting-txt" class="text-[10px] text-brand-400 font-medium">祝你有美好的一天 ✨</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要內容區 -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-6 space-y-6">
+
+        <!-- 焦點大看板：導師的話 + 倒數計時 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- (a) 導師的話 (佔據左側 2 欄) -->
+            <section class="md:col-span-2 bg-white rounded-3xl p-6 border border-brand-100 card-shadow relative overflow-hidden flex flex-col justify-between">
+                <!-- 裝飾底紋圖示 -->
+                <i class="fa-solid fa-quote-right absolute right-6 bottom-4 text-brand-100/40 text-8xl pointer-events-none"></i>
+                
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-2.5 h-6 rounded-full bg-brand-500"></span>
+                        <h2 class="text-lg font-bold text-brand-800 flex items-center gap-2">
+                            <i class="fa-solid fa-heart text-accent-rose"></i>
+                            <span>導師的溫馨叮嚀</span>
+                        </h2>
+                    </div>
+                    
+                    <div class="space-y-3 text-brand-800 leading-relaxed text-sm sm:text-base">
+                        <p class="font-bold text-brand-700">各位大朋友、小朋友們好：</p>
+                        <p class="indent-6">
+                            時序進入初冬，早晚溫差逐漸變大，班上有幾位寶貝出現了小感冒的症狀。請家長協助提醒孩子帶上一件薄外套，並準備好水壺，隨時補充水分。
+                        </p>
+                        <p class="indent-6">
+                            這週我們在語文課進行了小組合作發表，每位同學都展現了超乎預期的創意與自信，老師感到無比驕傲！讓我們本週繼續保持這股熱情，快樂學習、健康成長！
+                        </p>
+                    </div>
+                </div>
+
+                <div class="border-t border-brand-100 mt-6 pt-4 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center text-brand-600">
+                            <i class="fa-solid fa-signature text-xs"></i>
+                        </div>
+                        <span class="text-xs text-brand-500 font-medium">導師：林雨馨 老師</span>
+                    </div>
+                    <span class="text-xs text-brand-400 font-en">Updated: 2026.06.13</span>
+                </div>
+            </section>
+
+            <!-- 側邊：倒數計時小工具 -->
+            <section class="bg-gradient-to-br from-brand-600 to-brand-700 rounded-3xl p-6 text-white card-shadow flex flex-col justify-between relative overflow-hidden">
+                <div class="absolute -right-8 -bottom-8 opacity-10 text-9xl">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+                <div>
+                    <span class="bg-white/20 text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full font-en">Upcoming Event</span>
+                    <h3 class="text-lg font-bold mt-3 text-brand-100">下一個重要里程碑</h3>
+                    <p class="text-2xl font-black mt-1 text-white">期末評量週 📝</p>
+                    <p class="text-xs text-brand-200 mt-1">考試日期：06月24日</p>
+                </div>
+
+                <div class="mt-6">
+                    <div class="flex items-baseline gap-1">
+                        <span id="countdown-days" class="text-5xl font-black font-en text-accent-mustard">--</span>
+                        <span class="text-sm font-bold text-brand-200">天</span>
+                    </div>
+                    <p class="text-xs text-brand-200 mt-1">充足準備，放鬆心情，你可以的！</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- 中間：本週重要事項 (條列互動清單) -->
+        <section class="bg-white rounded-3xl p-6 border border-brand-100 card-shadow">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brand-100 pb-4 mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-6 rounded-full bg-accent-sage"></span>
+                    <h2 class="text-lg font-bold text-brand-800 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-brand-600"></i>
+                        <span>本週重要辦理事項</span>
+                    </h2>
+                </div>
+                <span class="text-xs bg-brand-50 text-brand-600 border border-brand-200 px-3 py-1 rounded-full font-medium">
+                    本週主題：自主、互助、感恩
+                </span>
+            </div>
+
+            <!-- 事項清單 (點擊可打勾，增加互動感) -->
+            <div class="space-y-3">
+                
+                <!-- 事項 1 -->
+                <label class="flex items-start gap-3.5 p-3.5 rounded-2xl hover:bg-brand-50 border border-transparent hover:border-brand-100 transition-all cursor-pointer group">
+                    <input type="checkbox" class="mt-1 w-5 h-5 rounded-md border-brand-300 text-brand-600 focus:ring-brand-500 accent-brand-600">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-xs font-bold bg-rose-100 text-rose-700 px-2 py-0.5 rounded">急件</span>
+                            <h4 class="font-bold text-brand-800 group-hover:text-brand-900">繳交秋季戶外教學家長同意書</h4>
+                        </div>
+                        <p class="text-xs text-brand-500 mt-1">請於本週五 (06/19) 前將同意書連同回條撕下交給各排排長，以便統計保險資料。</p>
+                    </div>
+                </label>
+
+                <!-- 事項 2 -->
+                <label class="flex items-start gap-3.5 p-3.5 rounded-2xl hover:bg-brand-50 border border-transparent hover:border-brand-100 transition-all cursor-pointer group">
+                    <input type="checkbox" class="mt-1 w-5 h-5 rounded-md border-brand-300 text-brand-600 focus:ring-brand-500 accent-brand-600">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">常規</span>
+                            <h4 class="font-bold text-brand-800 group-hover:text-brand-900">本週四上午進行健康檢查與視力複檢</h4>
+                        </div>
+                        <p class="text-xs text-brand-500 mt-1">當天請穿著整齊學校運動服，有配戴眼鏡的孩子請記得隨身攜帶，以便進行量測。</p>
+                    </div>
+                </label>
+
+                <!-- 事項 3 -->
+                <label class="flex items-start gap-3.5 p-3.5 rounded-2xl hover:bg-brand-50 border border-transparent hover:border-brand-100 transition-all cursor-pointer group">
+                    <input type="checkbox" class="mt-1 w-5 h-5 rounded-md border-brand-300 text-brand-600 focus:ring-brand-500 accent-brand-600">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">學習</span>
+                            <h4 class="font-bold text-brand-800 group-hover:text-brand-900">完成閱讀護照認證兩篇</h4>
+                        </div>
+                        <p class="text-xs text-brand-500 mt-1">鼓勵孩子本週利用晨讀時間或課後時間，至少完成兩篇課外書籍閱讀紀錄並給家長簽名。</p>
+                    </div>
+                </label>
+
+                <!-- 事項 4 -->
+                <label class="flex items-start gap-3.5 p-3.5 rounded-2xl hover:bg-brand-50 border border-transparent hover:border-brand-100 transition-all cursor-pointer group">
+                    <input type="checkbox" class="mt-1 w-5 h-5 rounded-md border-brand-300 text-brand-600 focus:ring-brand-500 accent-brand-600">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-xs font-bold bg-brand-100 text-brand-800 px-2 py-0.5 rounded">生活</span>
+                            <h4 class="font-bold text-brand-800 group-hover:text-brand-900">落實垃圾分類與餐具自主清潔</h4>
+                        </div>
+                        <p class="text-xs text-brand-500 mt-1">午餐時間過後，請同學確實將個人餐盒帶回家清洗，並共同維護班級公共區域整潔。</p>
+                    </div>
+                </label>
+
+            </div>
+        </section>
+
+        <!-- 下方：學校重要連結 -->
+        <section class="bg-white rounded-3xl p-6 border border-brand-100 card-shadow">
+            <div class="flex items-center gap-2 mb-4 border-b border-brand-100 pb-3">
+                <span class="w-2.5 h-6 rounded-full bg-accent-rose"></span>
+                <h2 class="text-lg font-bold text-brand-800 flex items-center gap-2">
+                    <i class="fa-solid fa-compass text-brand-600"></i>
+                    <span>學校與外部重要連結</span>
+                </h2>
+            </div>
+
+            <!-- 連結卡片 Grid 響應式排版 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <!-- 連結 1 -->
+                <a href="#" class="flex items-center justify-between p-4 rounded-2xl border border-brand-100 bg-brand-50/50 hover:bg-brand-50 hover:border-brand-400 hover:-translate-y-0.5 transition-all group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-school text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-brand-800 text-sm">學校官方網站</h3>
+                            <p class="text-[11px] text-brand-500">掌握最新校園行事曆與公告</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-brand-300 group-hover:text-brand-600 text-xs mr-1"></i>
+                </a>
+
+                <!-- 連結 2 -->
+                <a href="#" class="flex items-center justify-between p-4 rounded-2xl border border-brand-100 bg-brand-50/50 hover:bg-brand-50 hover:border-brand-400 hover:-translate-y-0.5 transition-all group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-address-book text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-brand-800 text-sm">電子數位聯絡簿</h3>
+                            <p class="text-[11px] text-brand-500">即時查閱孩子每日作業進度</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-brand-300 group-hover:text-brand-600 text-xs mr-1"></i>
+                </a>
+
+                <!-- 連結 3 -->
+                <a href="#" class="flex items-center justify-between p-4 rounded-2xl border border-brand-100 bg-brand-50/50 hover:bg-brand-50 hover:border-brand-400 hover:-translate-y-0.5 transition-all group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-chart-simple text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-brand-800 text-sm">成績與評量系統</h3>
+                            <p class="text-[11px] text-brand-500">線上查詢學期分數與出缺勤</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-brand-300 group-hover:text-brand-600 text-xs mr-1"></i>
+                </a>
+
+                <!-- 連結 4 -->
+                <a href="#" class="flex items-center justify-between p-4 rounded-2xl border border-brand-100 bg-brand-50/50 hover:bg-brand-50 hover:border-brand-400 hover:-translate-y-0.5 transition-all group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-apple-whole text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-brand-800 text-sm">本月營養午餐菜單</h3>
+                            <p class="text-[11px] text-brand-500">把關孩子的營養均衡與衛生安全</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-brand-300 group-hover:text-brand-600 text-xs mr-1"></i>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- 擴充功能：互動留言板 -->
+        <section class="bg-white rounded-3xl p-6 border border-brand-100 card-shadow">
+            <div class="flex items-center justify-between border-b border-brand-100 pb-3 mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-6 rounded-full bg-accent-mustard"></span>
+                    <h2 class="text-lg font-bold text-brand-800 flex items-center gap-2">
+                        <i class="fa-regular fa-paper-plane text-brand-600"></i>
+                        <span>雙向溝通留言板 (家長/學生)</span>
+                    </h2>
+                </div>
+                <span class="text-xs text-brand-400">目前有 <span id="msg-count" class="font-bold text-brand-600">2</span> 條公開訊息</span>
+            </div>
+
+            <!-- 新增留言 -->
+            <div class="bg-brand-50/60 p-4 rounded-2xl border border-brand-100 mb-4">
+                <p class="text-xs text-brand-600 font-bold mb-2">
+                    <i class="fa-solid fa-pencil mr-1"></i>給班級留句溫慢的話吧：
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="msg-author" placeholder="你的稱呼 (如: 冠宇媽媽)" class="px-3 py-2 text-sm text-gray-700 bg-white border border-brand-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 shrink-0 w-full sm:w-44">
+                    <input type="text" id="msg-content" placeholder="輸入你想分享的話或感謝..." class="flex-1 px-3 py-2 text-sm text-gray-700 bg-white border border-brand-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <button id="msg-send-btn" class="bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold px-5 py-2 rounded-xl transition-colors shrink-0">
+                        送出
+                    </button>
+                </div>
+            </div>
+
+            <!-- 留言列表 -->
+            <div id="messages-box" class="space-y-3 max-h-60 overflow-y-auto pr-1">
+                <!-- 留言 1 -->
+                <div class="p-3 bg-white border border-brand-100 rounded-2xl flex items-start gap-3 shadow-sm">
+                    <div class="w-8 h-8 rounded-full bg-accent-rose/20 text-brand-700 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-user-tag text-xs"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-brand-800">晴晴媽媽</span>
+                            <span class="text-[10px] text-brand-400">06-13 14:20</span>
+                        </div>
+                        <p class="text-xs text-brand-700 mt-1">謝謝老師的用心教導，晴晴每天回來說學校的生活都笑得好開心！老師也辛苦了，多喝溫水！</p>
+                    </div>
+                </div>
+                <!-- 留言 2 -->
+                <div class="p-3 bg-white border border-brand-100 rounded-2xl flex items-start gap-3 shadow-sm">
+                    <div class="w-8 h-8 rounded-full bg-accent-sage/20 text-brand-700 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-user-tag text-xs"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-brand-800">班長 冠廷</span>
+                            <span class="text-[10px] text-brand-400">06-13 11:05</span>
+                        </div>
+                        <p class="text-xs text-brand-700 mt-1">期末考大家一起加油！一定要把閱讀認證寫完喔！</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="bg-white border-t border-brand-100 py-6 text-center mt-8">
+        <p class="text-xs text-brand-400">
+            &copy; <span id="current-year"></span> 三年八班 溫馨班級佈告欄.
+        </p>
+        <p class="text-[10px] text-brand-400 mt-1">
+            由林導師與全體學生及熱心家長共同打造 ‧ 用愛守護孩子們的每一天 ❤️
+        </p>
+    </footer>
+
+    <!-- JavaScript 腳本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. 自動顯示今日日期
+            const dateSpan = document.getElementById('live-date');
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('zh-TW', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long'
+            });
+            dateSpan.textContent = formattedDate;
+
+            // 設定頁尾年份
+            document.getElementById('current-year').textContent = today.getFullYear();
+
+            // 2. 倒數計時功能 (目標: 06月24日)
+            // 將年份設定為目前系統的年份，防止跨年出錯
+            const targetYear = today.getFullYear();
+            const targetDate = new Date(`${targetYear}/06/24 08:00:00`);
+            const daysSpan = document.getElementById('countdown-days');
+
+            function updateCountdown() {
+                const now = new Date();
+                const diffTime = targetDate - now;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (diffDays > 0) {
+                    daysSpan.textContent = diffDays;
+                } else if (diffDays === 0) {
+                    daysSpan.textContent = '0';
+                    daysSpan.className = 'text-5xl font-black text-rose-500 font-en animate-pulse';
+                } else {
+                    daysSpan.textContent = 'PASS';
+                    daysSpan.className = 'text-4xl font-black text-gray-400 font-en';
+                }
+            }
+            updateCountdown();
+
+            // 3. 留言板簡易模擬功能
+            const sendBtn = document.getElementById('msg-send-btn');
+            const authorInput = document.getElementById('msg-author');
+            const contentInput = document.getElementById('msg-content');
+            const messagesBox = document.getElementById('messages-box');
+            const msgCountSpan = document.getElementById('msg-count');
+            
+            let msgCount = 2;
+
+            sendBtn.addEventListener('click', () => {
+                const author = authorInput.value.trim();
+                const content = contentInput.value.trim();
+
+                if (!author || !content) {
+                    // 若有空值，做簡單的晃動回饋，不使用 alert()
+                    sendBtn.classList.add('bg-red-500');
+                    setTimeout(() => sendBtn.classList.remove('bg-red-500'), 800);
+                    return;
+                }
+
+                // 獲取時間格式
+                const now = new Date();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const date = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const mins = String(now.getMinutes()).padStart(2, '0');
+                const timeStr = `${month}-${date} ${hours}:${mins}`;
+
+                // 隨機分配留言卡片的圖示背景顏色
+                const accents = ['accent-rose', 'accent-sage', 'accent-mustard'];
+                const selectedAccent = accents[Math.floor(Math.random() * accents.length)];
+
+                // 建立新的留言 DOM
+                const newMsg = document.createElement('div');
+                newMsg.className = 'p-3 bg-white border border-brand-100 rounded-2xl flex items-start gap-3 shadow-sm animate-pulse';
+                newMsg.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-${selectedAccent}/20 text-brand-700 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-user-tag text-xs"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-brand-800">${escapeHTML(author)}</span>
+                            <span class="text-[10px] text-brand-400">${timeStr}</span>
+                        </div>
+                        <p class="text-xs text-brand-700 mt-1">${escapeHTML(content)}</p>
+                    </div>
+                `;
+
+                // 插入最前方並捲動到最頂部
+                messagesBox.insertBefore(newMsg, messagesBox.firstChild);
+                messagesBox.scrollTop = 0;
+
+                // 移除新留言的閃爍動畫
+                setTimeout(() => {
+                    newMsg.classList.remove('animate-pulse');
+                }, 1500);
+
+                // 更新數量
+                msgCount++;
+                msgCountSpan.textContent = msgCount;
+
+                // 清空輸入欄位
+                authorInput.value = '';
+                contentInput.value = '';
+            });
+
+            // 簡易防止 XSS 工具
+            function escapeHTML(str) {
+                return str.replace(/[&<>'"]/g, 
+                    tag => ({
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        "'": '&#39;',
+                        '"': '&quot;'
+                    }[tag] || tag)
+                );
+            }
+        });
+    </script>
+</body>
+</html>
